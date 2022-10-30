@@ -10,7 +10,7 @@ import axios from 'axios'
 const FileUpload = () => {
   const [file, setFile] = useState();
   const [filename, setFilename] = useState('Drag and drop your EHR in PDF format here to start uploading')
-  const [uploadedFile, setUploadedFile] = useState({});
+  const [fileText, setFileText] = useState('PDF Text here (for testing purposes only)');
 
   const onChange = e => {
     setFile(e.target.files[0]);
@@ -28,9 +28,7 @@ const FileUpload = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      const { fileName, filePath } = res.data;
-
-      setUploadedFile({fileName, filePath});
+      setFileText(res.data);
     }catch(err){
       if(err.response.status === 500) {
         console.log('There was a problem with the server');
@@ -52,10 +50,11 @@ const FileUpload = () => {
           <div className='flex file-upload'>
               <img src={folder} height="64px"/>
               <H4 text={filename} align="center"/>
-              <input type="submit" class="btn btn-primary"/>
+              <input type="submit" className="btn btn-primary"/>
           </div>
           </form>
         </div>
+        <p>{fileText}</p>
     </div>
   )
 }
