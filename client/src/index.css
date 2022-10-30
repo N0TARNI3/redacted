@@ -126,14 +126,16 @@ input {
   justify-content: center;
 }
 #form{
-  position: absolute;  
   width: 350px;
   height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
 }
 .file-input {
   position: absolute;
   width: 350px;
-  height: 250px;
+  height: 150px;
   cursor: pointer;
   opacity: 0;
 }

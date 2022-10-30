@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import logo from '../img/logo.svg'
 import folder from '../img/folder.png'
 import H4 from './tokens/H4'
@@ -8,25 +8,37 @@ import H1 from './tokens/H1'
 import axios from 'axios'
 
 const FileUpload = () => {
-  const [file, setFile] = React.useState(null);
-  const handleSubmit = async(event) => {
-    console.log("Submitted!")
-    event.preventDefault()
+  const [file, setFile] = useState();
+  const [filename, setFilename] = useState('Drag and drop your EHR in PDF format here to start uploading')
+  const [uploadedFile, setUploadedFile] = useState({});
+
+  const onChange = e => {
+    setFile(e.target.files[0]);
+    setFilename(e.target.files[0].name);
+  };
+
+  const onSubmit = async e => {
+    e.preventDefault();
     const formData = new FormData();
-    formData.append("file", file);
-    axios
-    .post("http://localhost:5000/upload", formData)
-    .then((res) => {
-      alert("File upload success");
-    })
-    .catch((err) => alert("File Upload Error"));
-  }
+    formData.append('file', file);
 
-  const handleFileSelect = (event) => {
-    setFile(event.target.files[0]);
-    document.getElementById("form").submit();
-  }
+    try  {
+      const res = await axios.post('/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      const { fileName, filePath } = res.data;
 
+      setUploadedFile({fileName, filePath});
+    }catch(err){
+      if(err.response.status === 500) {
+        console.log('There was a problem with the server');
+      } else {
+        console.log(err.response.data.msg);
+      }
+    }
+  };
 
   return (
     <div className="flex">
@@ -35,14 +47,13 @@ const FileUpload = () => {
             <img src={logo} className="logo" />
         </div>
         <div className='flex-input'>
+          <form onSubmit={onSubmit} id="form">
+            <input type="file" accept="application/pdf" className='file-input' onChange={onChange} required/>
           <div className='flex file-upload'>
               <img src={folder} height="64px"/>
-              <H4 text="Drag and drop your EHR in PDF format here to start uploading" align="center"/>
-              <Label text="OR" type="lbl-light" />
-              <Button title="Browse Files" type="btn-primary"/>
+              <H4 text={filename} align="center"/>
+              <input type="submit" class="btn btn-primary"/>
           </div>
-          <form onSubmit={handleSubmit} id="form">
-            <input type="file" accept="application/pdf" className='file-input' onChange={handleFileSelect}/>
           </form>
         </div>
     </div>
