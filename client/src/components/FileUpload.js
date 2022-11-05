@@ -8,6 +8,10 @@ import H1 from './tokens/H1'
 import axios from 'axios'
 
 const FileUpload = () => {
+  //redirect to login if no user is logged in
+  if(sessionStorage['user_id'] == null){
+    window.open("/","_self")
+  }
   const [file, setFile] = useState();
   const [filename, setFilename] = useState('Drag and drop your EHR in PDF format here to start uploading')
   const [fileText, setFileText] = useState('PDF Text here (for testing purposes only)');

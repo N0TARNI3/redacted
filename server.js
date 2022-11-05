@@ -29,7 +29,6 @@ app.post('/login', async (req, res) => {
       "SELECT * FROM \"user\" WHERE email=$1 AND password=$2",
       [email, password]
     );
-    console.log(user.rows[0]);
     res.json(user.rows[0]);
   } catch (err) {
     console.error(err.message);

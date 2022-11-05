@@ -7,12 +7,19 @@ import axios from 'axios'
 import PropTypes from 'prop-types'
 
 
-const SignUp = ({roleID}) => {
+const SignUp = () => {
+  //redirect to file upload if user is currently logged in
+  if(sessionStorage['user_id'] != null){
+    window.open("/upload","_self")
+  }
+  
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const roleID = urlParams.get('role')
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [user, setUser] = useState({});
 
     const signup = async e => {
         e.preventDefault();
@@ -25,7 +32,8 @@ const SignUp = ({roleID}) => {
     
         try  {
           const res = await axios.post('/signup', formData);
-          setUser(res.data);
+          sessionStorage['user_id'] = JSON.stringify(res.data.id);
+          window.open("/upload","_self")
         }catch(err){
           if(err.response.status === 500) {
             console.log('There was a problem with the server');
@@ -62,9 +70,5 @@ const SignUp = ({roleID}) => {
     
   )
 }
-
-SignUp.propTypes = {
-    roleID: PropTypes.number
-  };
 
 export default SignUp

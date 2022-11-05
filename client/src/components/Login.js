@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { Link } from 'react-router-dom'
 import logo from '../img/logo.svg'
 import H4 from './tokens/H4'
 import Button from './tokens/Button'
@@ -6,10 +7,14 @@ import Label from './tokens/Label'
 import axios from 'axios'
 
 const Login = () => {
+  //redirect to file upload if user is currently logged in
+  if(sessionStorage['user_id'] != null){
+    window.open("/upload","_self")
+  }
+  
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [ user, setUser ] = useState({});
-
+ 
   const login = async e => {
     e.preventDefault();
     const formData = new FormData();
@@ -21,7 +26,8 @@ const Login = () => {
       if(!res.data){
         alert("Wrong credentials. Please try again.");
       } else{
-        setUser(res.data);
+        sessionStorage['user_id'] = JSON.stringify(res.data.id);
+        window.open("/upload","_self")
       }
     }catch(err){
       if(err.response.status === 500) {
@@ -47,7 +53,7 @@ const Login = () => {
             </div>
             <input type="submit" title="Login" className="btn btn-primary"/>
         </form>
-        <Label text="Don’t have an account yet? Sign up" type="lbl-light" />
+        <p className='lbl lbl-light'>Don't have an account yet? <Link to='/signup-type'>Sign Up</Link></p>
     </div>
   )
 }
