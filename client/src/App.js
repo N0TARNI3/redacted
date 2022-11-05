@@ -9,7 +9,7 @@ function App() {
   return (
     <div className='content'>
       <div className='container'>
-        <FileUpload/>
+        <Login/>
       </div>
     </div>
   );

@@ -64,6 +64,7 @@ p {
   font-size: 22px;
   margin: 0px;
   font-weight: 400;
+  max-width: 325px;
 }
 
 .lbl {
