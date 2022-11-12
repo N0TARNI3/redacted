@@ -31,7 +31,7 @@ const Results = () => {
         "tag": ["DATE","NAME","AGE", "NAME", "DATE", "DATE", "DATE", "LOC", "DATE","DATE","DATE","DATE","DATE"]
     };
     const user = JSON.parse(sessionStorage.getItem('user'));
-    console.log(user);    
+    const isResearcher = user.role == 'Researcher';   
     var today = new Date();
     var date = today.toLocaleDateString();
     var time = today.toLocaleTimeString();
@@ -140,7 +140,9 @@ const Results = () => {
         </div>
         <div className='row'>
             <Link className="btn btn-primary" to="/upload">Try Another Document</Link>
-            <PDFDownloadLink document={<Export />}><button className="btn btn-primary">Export Redacted Document</button></PDFDownloadLink>
+            {isResearcher ? (
+                <PDFDownloadLink document={<Export />}><button className="btn btn-primary">Export Redacted Document</button></PDFDownloadLink>
+            ):(null)}    
         </div>
     </div>
   )
