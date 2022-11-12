@@ -6,7 +6,7 @@ import Button from './tokens/Button'
 
 const SignUpType = () => {  
   //redirect to file upload if user is currently logged in
-  if(sessionStorage['user_id'] != null){
+  if(sessionStorage['user'] != null){
     window.open("/upload","_self")
   }
   
