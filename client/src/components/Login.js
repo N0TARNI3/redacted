@@ -1,37 +1,34 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../img/logo.svg'
-import H4 from './tokens/H4'
-import Button from './tokens/Button'
 import Label from './tokens/Label'
 import axios from 'axios'
 
 const Login = () => {
   //redirect to file upload if user is currently logged in
-  if(sessionStorage['user_id'] != null){
+  if(sessionStorage['user'] != null){
     window.open("/upload","_self")
   }
   
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const loginURL = `/api/user/login?email=${email}&password=${password}`;
  
   const login = async e => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
-
     try  {
-      const res = await axios.post('/login', formData);
+      const res = await axios.get(loginURL);
       if(!res.data){
         alert("Wrong credentials. Please try again.");
       } else{
-        sessionStorage['user_id'] = JSON.stringify(res.data.id);
+        sessionStorage.setItem("user", JSON.stringify(res.data.data));
         window.open("/upload","_self")
       }
     }catch(err){
       if(err.response.status === 500) {
-        console.log('There was a problem with the server');
+        alert('There was a problem with the server');
+      } else if (err.response.status === 400) {
+        alert("Wrong credentials. Please try again.");
       } else {
         console.log(err.response.data.msg);
       }
@@ -41,7 +38,7 @@ const Login = () => {
   return (
     <div className="flex">
         <img src={logo} className="logo"/>
-        <H4 text="Electronic Health Record (EHR) De-identification Tool" align="center"/>
+        <h4 className='h4'  style={{width: "325px", textAlign: "center"}}>Electronic Health Record (EHR) De-identification Tool</h4>
         <form className="flex" onSubmit={login}>
             <div className='form-control'>
                 <Label text="email" type="lbl-solid" />

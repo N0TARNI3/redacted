@@ -15,7 +15,7 @@ function App() {
             <Route path="/signup-type" element={<SignUpType/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/upload" element={<FileUpload/>}/>
-            <Route path="/results" element={<Results/>}/>
+            <Route path="/results" element={<Results/>} render={(props) => <Results {...props}/>}/>
           </Routes>
         </BrowserRouter>
       </div>

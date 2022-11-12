@@ -2,19 +2,17 @@ import React, {useState} from 'react'
 import logo from '../img/logo.svg'
 import folder from '../img/folder.png'
 import H4 from './tokens/H4'
-import Button from './tokens/Button'
-import Label from './tokens/Label'
 import H1 from './tokens/H1'
 import axios from 'axios'
 
 const FileUpload = () => {
   //redirect to login if no user is logged in
-  if(sessionStorage['user_id'] == null){
+  if(sessionStorage['user'] == null){
     window.open("/","_self")
   }
   const [file, setFile] = useState();
   const [filename, setFilename] = useState('Drag and drop your EHR in PDF format here to start uploading')
-  const [fileText, setFileText] = useState('PDF Text here (for testing purposes only)');
+  const [fileText, setFileText] = useState();
 
   const onChange = e => {
     setFile(e.target.files[0]);
@@ -27,12 +25,14 @@ const FileUpload = () => {
     formData.append('file', file);
 
     try  {
-      const res = await axios.post('/upload', formData, {
+      const res = await axios.post('http://sessionhost:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-      setFileText(res.data);
+      var raw = res.data.replaceAll("\n", " ");
+      raw = raw.replaceAll(/  +/g," ");
+      setFileText(raw);
     }catch(err){
       if(err.response.status === 500) {
         console.log('There was a problem with the server');
@@ -58,7 +58,6 @@ const FileUpload = () => {
           </div>
           </form>
         </div>
-        <p>{fileText}</p>
     </div>
   )
 }
