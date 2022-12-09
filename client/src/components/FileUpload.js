@@ -38,7 +38,8 @@ const FileUpload = () => {
       try  {
           const res = await axios.get('/api/model', {
             params: {
-              word_text: cleanText
+              word: cleanText,
+              file_name: filename
             }
           });
           sessionStorage.setItem("results", JSON.stringify(res.data));

@@ -28,7 +28,7 @@ const Results = () => {
         results.data.labels.forEach((labels, index) => {
             if(results.data.tags[index] === "NAME"){
                 if((rawText.charAt(rawText.lastIndexOf(labels)-4) === 'D' && (rawText.charAt(rawText.lastIndexOf(labels)-3) === 'r')) || 
-                   (rawText.charAt(rawText.lastIndexOf(labels)+labels.length+2) === 'M' && rawText.charAt(rawText.lastIndexOf(labels)+labels.length+3) === 'D')){
+                   (rawText.charAt(rawText.lastIndexOf(labels)+labels.length+2) === 'M' || rawText.charAt(rawText.lastIndexOf(labels)+labels.length+1) === 'M')) {
                     rawText = rawText.replace(labels, "<span class=\"token\"><span class='phi'>"+labels+"</span> "+results.data.tags[index]+"-DOCTOR</span>");
                 } else {
                     rawText = rawText.replace(labels, "<span class=\"token\"><span class='phi'>"+labels+"</span> "+results.data.tags[index]+"-PATIENT</span>");
@@ -51,7 +51,7 @@ const Results = () => {
         results.data.labels.forEach((labels, index) => {
             if(results.data.tags[index] === "NAME"){
                 if((rawText.charAt(rawText.lastIndexOf(labels)-4) === 'D' && (rawText.charAt(rawText.lastIndexOf(labels)-3) === 'r')) || 
-                   (rawText.charAt(rawText.lastIndexOf(labels)+labels.length+2) === 'M' && rawText.charAt(rawText.lastIndexOf(labels)+labels.length+3) === 'D')){
+                   (rawText.charAt(rawText.lastIndexOf(labels)+labels.length+2) === 'M' || rawText.charAt(rawText.lastIndexOf(labels)+labels.length+1) === 'M')){
                     rawText = rawText.replace(labels, "["+results.data.tags[index]+"-DOCTOR]");
                     lastIndex = rawText.lastIndexOf("["+results.data.tags[index]+"-DOCTOR]")
                 } else {
