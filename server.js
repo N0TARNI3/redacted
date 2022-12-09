@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const pool = require('./db')
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const pdfParser = require('pdf-parse')

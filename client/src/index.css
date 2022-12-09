@@ -174,8 +174,9 @@ input {
 .token {
   color: var(--orange);
   background-color: var(--token);
-  padding: 2px 4px;
+  padding: 6px 4px 4px 4px;
   border-radius: 4px;
+  font-size: 12px;
 }
 
 .phi {
