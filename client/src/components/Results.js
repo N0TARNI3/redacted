@@ -62,8 +62,10 @@ const Results = () => {
                 rawText = rawText.replace(labels, "["+results.data.tags[index]+"]");
                 lastIndex = rawText.lastIndexOf("["+results.data.tags[index]+"]")
             }
-            redactedText += rawText.substring(0, lastIndex+11)
-            rawText = rawText.slice(lastIndex+11);
+            redactedText += rawText.substring(0, lastIndex+results.data.tags[index].length+2)
+            console.log(redactedText);
+            rawText = rawText.slice(lastIndex+results.data.tags[index].length+2);
+            console.log(rawText);
         })
         redactedText+=rawText;
         return redactedText;    
