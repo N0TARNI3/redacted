@@ -71,15 +71,15 @@ const FileUpload = () => {
         <>
           <div className='row'>
               <H1 text="Welcome to"/>
-              <img src={logo} className="logo" alt="logo"/>
+              <img src={logo} style={{height: "40px"}} alt="logo"/>
           </div>
           <div className='flex-input'>
             <form onSubmit={onSubmit} id="form">
               <input type="file" accept="application/pdf" className='file-input' onChange={onChange} required/>
-            <div className='flex file-upload'>
-                <img src={folder} height="64px" alt="folder"/>
-                <H4 text={filename} align="center"/>
-                <input type="submit" className="btn btn-primary"/>
+            <div className='flex file-upload' style={{gap: "0px"}}>
+                <img src={folder} height="48px" alt="folder"/>
+                <p align="center" style={{width: "300px"}}>{filename}</p>
+                <input type="submit" className="btn btn-primary" style={{width: "160px"}}/>
             </div>
             </form>
           </div>

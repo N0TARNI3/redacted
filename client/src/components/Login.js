@@ -38,8 +38,8 @@ const Login = () => {
   return (
     <div className="flex">
         <img src={logo} className="logo"/>
-        <h4 className='h4'  style={{width: "325px", textAlign: "center"}}>Electronic Health Record (EHR) De-identification Tool</h4>
-        <form className="flex" onSubmit={login}>
+        <h4 className='h4'  style={{width: "300px", textAlign: "center"}}>Electronic Health Record (EHR) De-identification Tool</h4>
+        <form className="flex inner-flex" onSubmit={login}>
             <div className='form-control'>
                 <Label text="email" type="lbl-solid" />
                 <input type="email" placeholder="johndoe@gmail.com" onChange={(e) => {setEmail(e.target.value);}}/>
@@ -48,9 +48,9 @@ const Login = () => {
                 <Label text="password" type="lbl-solid" />
                 <input type="password" placeholder="6 characters required" onChange={(e) => {setPassword(e.target.value);}}/>
             </div>
-            <input type="submit" title="Login" className="btn btn-primary"/>
+            <button type="submit" className="btn btn-primary" style={{marginTop: "8px"}}>Login</button>
         </form>
-        <p className='lbl lbl-light'>Don't have an account yet? <Link to='/signup-type'>Sign Up</Link></p>
+        <p className='lbl lbl-light'>Don't have an account yet? <Link to='/signup'>Sign Up</Link></p>
     </div>
   )
 }

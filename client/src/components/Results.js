@@ -140,7 +140,7 @@ const Results = () => {
         </div>
         <div className='results-container'>
             <div className="results-container-scroll">
-                <p dangerouslySetInnerHTML={renderAsHTML()}></p>
+                <p dangerouslySetInnerHTML={renderAsHTML()} className="results"></p>
             </div>
         </div>
         <div className='row'>
