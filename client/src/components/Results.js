@@ -14,7 +14,7 @@ const Results = () => {
     var results = JSON.parse(sessionStorage.getItem('results'));
     console.log(results);
     const user = JSON.parse(sessionStorage.getItem('user'));
-    const isResearcher = user.role === 'Researcher';   
+    const isNotDoctor = !(user.role === 'Doctor');   
     var today = new Date();
     var date = today.toLocaleDateString();
     var time = today.toLocaleTimeString();
@@ -49,6 +49,15 @@ const Results = () => {
         var redactedText = "";
         var lastIndex = 0; 
         results.data.labels.forEach((labels, index) => {
+            //Additional Redaction Levels
+            if((user.role === "Nurse Assistant") && (results.data.tags[index] === "NAME" || results.data.tags[index] === "AGE" || results.data.tags[index] === "CONTACT")) {
+                return;
+            } else if ((user.role === "Nurse") && (results.data.tags[index] === "NAME" || results.data.tags[index] === "AGE" || results.data.tags[index] === "CONTACT" || results.data.tags[index] === "DATE")){
+                return;
+            } else if ((user.role === "Secretary") && (results.data.tags[index] === "NAME" || results.data.tags[index] === "LOCATION" || results.data.tags[index] === "CONTACT" || results.data.tags[index] === "ID")){
+                return;
+            }
+
             if(results.data.tags[index] === "NAME"){
                 if((rawText.charAt(rawText.lastIndexOf(labels)-4) === 'D' && (rawText.charAt(rawText.lastIndexOf(labels)-3) === 'r')) || 
                    (rawText.charAt(rawText.lastIndexOf(labels)+labels.length+2) === 'M' || rawText.charAt(rawText.lastIndexOf(labels)+labels.length+1) === 'M')){
@@ -145,7 +154,7 @@ const Results = () => {
         </div>
         <div className='row'>
             <Link className="btn btn-primary" to="/upload">Try Another Document</Link>
-            {isResearcher ? (
+            {isNotDoctor ? (
                 <PDFDownloadLink document={<Export />} fileName={"REDACTED-"+date+"-"+time}><button className="btn btn-primary">Export Redacted Document</button></PDFDownloadLink>
             ):(null)}    
         </div>
