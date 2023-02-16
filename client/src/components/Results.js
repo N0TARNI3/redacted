@@ -1,3 +1,14 @@
+/* 
+Program:        Login.js
+Programmer/s:   Arnie Fraga
+Description:    React component for the results section of the web app
+Date Written:   Oct. 03, 2022
+Last Modified:  Feb. 15, 2023
+Data:           React Components, HTML DOM Elements (FormData),
+                React Router DOM objects, React-PDF objects, JSON Objects
+*/
+
+//Import needed components and libraries
 import {Link} from 'react-router-dom'
 import logo from '../img/logo.svg'
 import logoPNG from '../img/logo.png'
@@ -5,21 +16,23 @@ import H4 from './tokens/H4'
 import Label from './tokens/Label'
 import { Page, Text, Image, Document, StyleSheet, PDFDownloadLink } from "@react-pdf/renderer"
 
+//Main React Component object
 const Results = () => {
     //redirect to login if no user is logged in
-    /*if(sessionStorage['user'] == null){
+    if(sessionStorage['user'] == null){
         window.open("/","_self")
-    }*/
+    }
+
+    //States and variables for this component, mainly for document content
     var text = sessionStorage.getItem('text');
     var results = JSON.parse(sessionStorage.getItem('results'));
-    console.log(results);
     const user = JSON.parse(sessionStorage.getItem('user'));
     const isNotDoctor = !(user.role === 'Doctor');   
     var today = new Date();
     var date = today.toLocaleDateString();
     var time = today.toLocaleTimeString();
 
-
+    //Function that applies style to the tokens and labels
     function parseStyle() {
         var rawText = text.replaceAll("\n", " ");
         rawText = rawText.replaceAll(/  +/g," ");
@@ -44,6 +57,14 @@ const Results = () => {
         return styledText;       
     }
 
+    //Function that renders a string as HTML elements
+    function renderAsHTML(){
+        return(
+          {__html:parseStyle()}
+        )
+    }
+
+    //Function that changes tagged PHIs into redacted form
     function redactText() {
         var rawText = text;
         var redactedText = "";
@@ -80,12 +101,7 @@ const Results = () => {
         return redactedText;    
     }
 
-    function renderAsHTML(){
-        return(
-          {__html:parseStyle()}
-        )
-    }
-
+     //Stylesheet for the document to be exported
     const styles = StyleSheet.create({
         logo: {
             height: 40,
@@ -109,7 +125,7 @@ const Results = () => {
         },
         redactedText: {
             margin: 12,
-            fontSize: 12,
+            fontSize: 10,
             textAlign: "justify",
             fontFamily: "Times-Roman",
             border: "1px",
@@ -119,8 +135,8 @@ const Results = () => {
         },
     });
 
-    const Export = () => (
-        
+    //Function for parsing the redacted text into PDF format
+    const Export = () => (        
     <Document>
         <Page style={styles.body}>
             <Image src={logoPNG} style={styles.logo}/>
@@ -135,9 +151,9 @@ const Results = () => {
         </Page>
     </Document>
     );
-    
+   
+  //HTML to be rendered for this component  
   return (
-
     <div className="flex">
         <div className='row'>
             <img src={logo} className="logo" alt="logo"/>

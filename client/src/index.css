@@ -1,8 +1,18 @@
+/* 
+Program:        index.css
+Programmer/s:   Arnie Fraga
+                Nita Antasuda
+                Juliet Japitana
+Description:    Stylesheet for the web application
+Date Written:   Oct. 03, 2022
+Last Modified:  Feb. 15, 2023
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 :root {
   --roboto: "Roboto";
-  --gray: rgb(161,161,161);
+  --gray: rgb(109, 109, 109);
   --primary: rgb(35,167,255);
   --orange: rgba(255, 122, 0, 1);
   --token: rgba(255, 233, 212, 1);
@@ -97,6 +107,16 @@ p.results{
   color: var(--gray);
 }
 
+.lbl-error {
+  background-color: #FFC9CB;
+  color: #FF4B54;
+  padding: 2px 16px 2px 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .btn {
   min-width: 60px;
   padding: 6px 32px;
@@ -108,11 +128,15 @@ p.results{
   cursor: pointer;
   text-decoration: none;
   text-align: center;
+  transition: 0.3s;
 }
 
 .btn-primary {
   color: white;
   background-color: var(--primary);
+}
+.btn-primary:hover{
+    background-color: #008ae6;
 }
 
 .btn-secondary {
@@ -199,24 +223,20 @@ select {
   font-size: 16px;
 }
 
-/*scroll style*/
-/* width */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: none; 
 }
- 
-/* Handle */
+
 ::-webkit-scrollbar-thumb {
   background: #d3d3d3; 
   border-radius: 25px;
 }
 
-/* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
   background: #808080; 
 }
